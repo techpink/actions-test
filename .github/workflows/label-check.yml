@@ -15,12 +15,12 @@ jobs:
           echo github.event.pull_request.number = ${{ github.event.pull_request.number }}
           echo github.event.issue.number = ${{ github.event.issue.number }}
   do-not-merge:
-    if: ${{ contains(github.event.*.labels.*.name, 'do not merge') }}
+    if: ${{ !contains(github.event.*.labels.*.name, 'no breaking changes') && !contains(github.event.*.labels.*.name, 'breaking changes')}}
     name: Prevent Merging
     runs-on: ubuntu-latest
     steps:
       - name: Check for label
         run: |
-          echo "Pull request is labeled as 'do not merge'"
+          echo "Pull request must be labeled as 'breaking changes' or 'no breaking changes'"
           echo "This workflow fails so that the pull request cannot be merged"
           exit 1
