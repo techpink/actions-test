@@ -5,6 +5,15 @@ on:
     types: [synchronize, opened, reopened, labeled, unlabeled]
 
 jobs:
+  check-pr:
+    name: Get PR number
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get PR number
+        run: |
+          echo github.event.number = ${{ github.event.number  }}
+          echo github.event.pull_request.number = ${{ github.event.pull_request.number }}
+          echo github.event.issue.number = ${{ github.event.issue.number }}
   do-not-merge:
     if: ${{ contains(github.event.*.labels.*.name, 'do not merge') }}
     name: Prevent Merging
